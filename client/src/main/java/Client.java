@@ -8,9 +8,9 @@ public class Client
 {
     public static void main(String[] args)
     {
-        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args))
+        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "client.cfg"))
         {
-            com.zeroc.Ice.ObjectPrx base = communicator.stringToProxy("SimplePrinter:default -p 10000");
+            com.zeroc.Ice.ObjectPrx base = communicator.propertyToProxy("Service.Proxy");
             Demo.PrinterPrx printer = Demo.PrinterPrx.checkedCast(base);
             if(printer == null)
             {
@@ -56,18 +56,6 @@ public class Client
         return exist; 
     }    
 
-    /*public static void routes() {
-        String project = System.getProperty("user.dir");
-        File directory = new File(project);
-        File[] files = directory.listFiles();
-
-        for (File search : files) {
-            String f = search.getName();
-            System.out.println(f);
-            System.out.println("Found the file: " + search.getAbsolutePath());
-        }    
-    }*/
-
     public static int verifyNumber(String input){
         int inputNumber=0, response=0;
         if(input == null){
@@ -75,7 +63,7 @@ public class Client
         }else{
             try{
                 inputNumber = Integer.parseInt(input);
-                if(inputNumber < 1){
+                if(inputNumber <= 1){
                     response = -1;
                 }else{
                     response=inputNumber;
