@@ -1,3 +1,5 @@
+import java.net.ConnectException;
+
 public class Server
 {
     public static void main(String[] args)
@@ -9,6 +11,10 @@ public class Server
             adapter.add(object, com.zeroc.Ice.Util.stringToIdentity("SimplePrinter"));
             adapter.activate();
             communicator.waitForShutdown();
-        }
+        } //catch (ConnectionRefusedException e) {
+        //     System.out.println("test");
+        // } catch (SocketException u) {
+        //     System.out.println("test2");
+        // }
     }
 }

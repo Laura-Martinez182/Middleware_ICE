@@ -17,13 +17,7 @@ package Demo;
 
 public interface Printer extends com.zeroc.Ice.Object
 {
-    void printString(String s, com.zeroc.Ice.Current current);
-
-    void verifyGUID(String guid, int n, com.zeroc.Ice.Current current);
-
-    int searchNextPrime(int n, com.zeroc.Ice.Current current);
-
-    boolean isPrime(int n, com.zeroc.Ice.Current current);
+    int message(String guid, int number, com.zeroc.Ice.Current current);
 
     /** @hidden */
     static final String[] _iceIds =
@@ -56,75 +50,18 @@ public interface Printer extends com.zeroc.Ice.Object
      * @param current -
      * @return -
     **/
-    static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_printString(Printer obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
-    {
-        com.zeroc.Ice.Object._iceCheckMode(null, current.mode);
-        com.zeroc.Ice.InputStream istr = inS.startReadParams();
-        String iceP_s;
-        iceP_s = istr.readString();
-        inS.endReadParams();
-        obj.printString(iceP_s, current);
-        return inS.setResult(inS.writeEmptyParams());
-    }
-
-    /**
-     * @hidden
-     * @param obj -
-     * @param inS -
-     * @param current -
-     * @return -
-    **/
-    static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_verifyGUID(Printer obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
+    static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_message(Printer obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
     {
         com.zeroc.Ice.Object._iceCheckMode(null, current.mode);
         com.zeroc.Ice.InputStream istr = inS.startReadParams();
         String iceP_guid;
-        int iceP_n;
+        int iceP_number;
         iceP_guid = istr.readString();
-        iceP_n = istr.readInt();
+        iceP_number = istr.readInt();
         inS.endReadParams();
-        obj.verifyGUID(iceP_guid, iceP_n, current);
-        return inS.setResult(inS.writeEmptyParams());
-    }
-
-    /**
-     * @hidden
-     * @param obj -
-     * @param inS -
-     * @param current -
-     * @return -
-    **/
-    static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_searchNextPrime(Printer obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
-    {
-        com.zeroc.Ice.Object._iceCheckMode(null, current.mode);
-        com.zeroc.Ice.InputStream istr = inS.startReadParams();
-        int iceP_n;
-        iceP_n = istr.readInt();
-        inS.endReadParams();
-        int ret = obj.searchNextPrime(iceP_n, current);
+        int ret = obj.message(iceP_guid, iceP_number, current);
         com.zeroc.Ice.OutputStream ostr = inS.startWriteParams();
         ostr.writeInt(ret);
-        inS.endWriteParams(ostr);
-        return inS.setResult(ostr);
-    }
-
-    /**
-     * @hidden
-     * @param obj -
-     * @param inS -
-     * @param current -
-     * @return -
-    **/
-    static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_isPrime(Printer obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
-    {
-        com.zeroc.Ice.Object._iceCheckMode(null, current.mode);
-        com.zeroc.Ice.InputStream istr = inS.startReadParams();
-        int iceP_n;
-        iceP_n = istr.readInt();
-        inS.endReadParams();
-        boolean ret = obj.isPrime(iceP_n, current);
-        com.zeroc.Ice.OutputStream ostr = inS.startWriteParams();
-        ostr.writeBool(ret);
         inS.endWriteParams(ostr);
         return inS.setResult(ostr);
     }
@@ -136,10 +73,7 @@ public interface Printer extends com.zeroc.Ice.Object
         "ice_ids",
         "ice_isA",
         "ice_ping",
-        "isPrime",
-        "printString",
-        "searchNextPrime",
-        "verifyGUID"
+        "message"
     };
 
     /** @hidden */
@@ -173,19 +107,7 @@ public interface Printer extends com.zeroc.Ice.Object
             }
             case 4:
             {
-                return _iceD_isPrime(this, in, current);
-            }
-            case 5:
-            {
-                return _iceD_printString(this, in, current);
-            }
-            case 6:
-            {
-                return _iceD_searchNextPrime(this, in, current);
-            }
-            case 7:
-            {
-                return _iceD_verifyGUID(this, in, current);
+                return _iceD_message(this, in, current);
             }
         }
 
