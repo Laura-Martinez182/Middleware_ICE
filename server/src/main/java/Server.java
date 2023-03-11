@@ -1,4 +1,4 @@
-import java.net.ConnectException;
+import com.zeroc.Ice.SocketException;
 
 public class Server
 {
@@ -11,10 +11,8 @@ public class Server
             adapter.add(object, com.zeroc.Ice.Util.stringToIdentity("SimplePrinter"));
             adapter.activate();
             communicator.waitForShutdown();
-        } //catch (ConnectionRefusedException e) {
-        //     System.out.println("test");
-        // } catch (SocketException u) {
-        //     System.out.println("test2");
-        // }
+        }catch (SocketException u) {
+            System.out.println("No se pudo asignar la direccion IP solicitada al socket, verifique que la direccion IP del servidor este correcta.");
+        }
     }
 }

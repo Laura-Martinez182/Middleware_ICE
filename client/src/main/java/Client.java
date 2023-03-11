@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.UUID;
 import com.zeroc.Ice.Communicator;
+import com.zeroc.Ice.ConnectFailedException;
 import com.zeroc.Ice.ConnectionRefusedException;
 import com.zeroc.Ice.ObjectPrx;
 import com.zeroc.Ice.Util;
@@ -22,36 +23,35 @@ public class Client
                 throw new Error("Invalid proxy");
             }    
             
-            try {
-                if (args.length == 0) {
-                    System.out.println("Debe ingresar al menos un entero positivo y opcionalmente un nombre de archivo de texto local \n" + "Autoras: \n" + "Keren Lopez - A00368902 \n" +
-                    "Laura Martinez - A00365187");
-                } else{
-                    int number = verifyNumber(args[0]);
-                    if (number == -1) {
-                        System.out.println("Debe ingresar un numero entero positivo mayor que 1"); 
-                    } else if(args.length == 1) {
-                        String guid = generateRandomGUID();
+            if (args.length == 0) {
+                System.out.println("Debe ingresar al menos un entero positivo y opcionalmente un nombre de archivo de texto local \n" + "Autoras: \n" + "Keren Lopez - A00368902 \n" +
+                "Laura Martinez - A00365187");
+            } else{
+                int number = verifyNumber(args[0]);
+                if (number == -1) {
+                    System.out.println("Debe ingresar un numero entero positivo mayor que 1"); 
+                } else if(args.length == 1) {
+                    String guid = generateRandomGUID();
+                    int msg = printer.message(guid, number);
+                    System.out.println(msg);
+                }else{
+                    boolean exist = fileExists(args[1]);
+                    if(exist == true) {
+                        System.out.println("Archivo encontrado");
+                        String guid = readGUID(args[1]);
                         int msg = printer.message(guid, number);
                         System.out.println(msg);
-                    }else{
-                        boolean exist = fileExists(args[1]);
-                        if(exist == true) {
-                            System.out.println("Archivo encontrado");
-                            String guid = readGUID(args[1]);
-                            int msg = printer.message(guid, number);
-                            System.out.println(msg);
-                        } else {
-                            System.out.println("El archivo no existe o el programa no puede acceder a el");
-                        }
+                    } else {
+                        System.out.println("El archivo no existe o el programa no puede acceder a el");
                     }
                 }
-            } catch (ConnectionRefusedException e) {
-                System.out.println("test");
-            }
+            }   
                 
-                
-        } 
+        } catch (ConnectionRefusedException e) {
+            System.err.println("La conexion fue rechazada por el servidor, no se pudo establecer una conexion en el puerto especificado.");
+        }catch (ConnectFailedException e) {
+            System.err.println("Tiempo de conexion agotado. Verifique la direccion IP indicada para el cliente.");
+        }
     }
 
     public static boolean fileExists(String file) {
