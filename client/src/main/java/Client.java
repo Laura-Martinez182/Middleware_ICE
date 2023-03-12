@@ -7,6 +7,7 @@ import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.ConnectFailedException;
 import com.zeroc.Ice.ConnectionRefusedException;
 import com.zeroc.Ice.ObjectPrx;
+import com.zeroc.Ice.SocketException;
 import com.zeroc.Ice.Util;
 
 
@@ -48,9 +49,11 @@ public class Client
             }   
                 
         } catch (ConnectionRefusedException e) {
-            System.err.println("La conexion fue rechazada por el servidor, no se pudo establecer una conexion en el puerto especificado.");
+            System.err.println("La conexion fue rechazada por el servidor, no se pudo establecer una conexion en el puerto o IP especificada.");
         }catch (ConnectFailedException e) {
             System.err.println("Tiempo de conexion agotado. Verifique la direccion IP indicada para el cliente.");
+        } catch (SocketException u) {
+            System.out.println("No se pudo encontrar el puerto indicado, verifique que este disponible.");
         }
     }
 
